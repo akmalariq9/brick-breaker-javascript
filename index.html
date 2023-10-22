@@ -9,21 +9,224 @@
       href="https://media.discordapp.net/attachments/1150687865420906517/1156286863036924015/image.png?ex=65146b8e&is=65131a0e&hm=1e32f46c85263479872fa3151b3d2e91d43a54ff42eefc02026659c867e03d47&=&width=640&height=640"
     />
     <title>Brick Breaker - 5025211188</title>
-    <link rel="stylesheet" href="styles.css" />
+    <!-- <link rel="stylesheet" href="styles.css" /> -->
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: rgba(0, 0, 0, 0.7);
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .fullscreen {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      h1 {
+        color: white;
+        font-size: 36px;
+        margin-bottom: 20px;
+      }
+
+      .level-button-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row; /* Menampilkan tombol secara horizontal */
+        gap: 10px;
+      }
+
+      /* Tambahkan CSS berikut untuk mengatur tombol agar terlihat lebih baik */
+      .level-button-container button {
+        flex: 1; /* Tombol akan berbagi ruang secara merata */
+      }
+
+      .level-button {
+        background-color: #0095dd;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 18px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s ease-in-out;
+      }
+
+      .leaderboard-Button {
+        background-color: #0095dd;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 18px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s ease-in-out;
+      }
+
+      .level-button:hover {
+        background-color: #0077b6;
+      }
+
+      .leaderboard-container {
+        background-color: white;
+        border: 2px solid #0095dd;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        max-width: 600px; /* Lebar lebih besar */
+        margin: 0 auto;
+      }
+
+      .leaderboard-heading {
+        font-size: 28px; /* Teks lebih besar */
+        font-weight: bold;
+        color: #0095dd;
+        text-align: center;
+        margin-bottom: 15px; /* Ruang bawah lebih besar */
+      }
+
+      .leaderboard-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 20px; /* Teks tabel lebih besar */
+      }
+
+      .leaderboard-table th,
+      .leaderboard-table td {
+        padding: 15px; /* Ruang sel lebih besar */
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .leaderboard-table th {
+        background-color: #0095dd;
+        color: white;
+      }
+
+      .leaderboard-table tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      .leaderboard-table tr:hover {
+        background-color: #ddd;
+      }
+
+      canvas {
+        display: none;
+      }
+
+      .form-container {
+        background-color: #0095dd;
+        padding: 20px;
+        border-radius: 5px;
+        text-align: center;
+        display: none;
+      }
+
+      .form-container p {
+        color: white;
+        font-size: 16px;
+      }
+
+      .form-container input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+
+      .form-container button {
+        background-color: #0077b6;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 18px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s ease-in-out;
+      }
+
+      .form-container button:hover {
+        background-color: #005b8f;
+      }
+
+      /* Hide the form switch links */
+      #switchToRegistration,
+      #switchToLogin {
+        color: black;
+        cursor: pointer;
+        margin-bottom: 20px;
+        text-decoration: underline;
+      }
+    </style>
   </head>
   <body>
-    <div id="menu" class="fullscreen">
-      <h1>Brick Breaker</h1>
-      <div class="level-button-container">
-        <button id="startButton1" class="level-button" data-level="1">
-          Level 1
-        </button>
-        <button id="startButton2" class="level-button" data-level="2">
-          Level 2
-        </button>
-        <button id="startButton3" class="level-button" data-level="3">
-          Level 3
-        </button>
+    <div id="home" class="fullscreen">
+      <div class="home-container">
+        <div class="vertical-align">
+          <h1>Welcome to Brick Breaker</h1>
+
+          <div class="form-container" id="registrationForm">
+            <p>Please enter your name:</p>
+            <input type="text" id="userName" />
+            <p>Please enter your email:</p>
+            <input type="text" id="userEmail" />
+            <p>Please enter your password:</p>
+            <input type="password" id="userPassword" />
+            <button id="registerButton">Register</button>
+            <p>
+              Already have an account?
+              <span id="switchToLogin">Log in here</span>
+            </p>
+          </div>
+
+          <div class="form-container" id="loginForm" style="display: none">
+            <p>Please enter your email:</p>
+            <input type="text" id="loginEmail" />
+            <p>Please enter your password:</p>
+            <input type="password" id="loginPassword" />
+            <button id="loginButton">Log in</button>
+            <p>
+              Don't have an account?
+              <span id="switchToRegistration">Register here</span>
+            </p>
+          </div>
+
+          <!-- Game Level Selection (Initially Hidden) -->
+          <div id="levelSelection" style="display: none">
+            <div class="level-button-container">
+              <button id="startButton1" class="level-button" data-level="1">
+                Level 1
+              </button>
+              <button id="startButton2" class="level-button" data-level="2">
+                Level 2
+              </button>
+              <button id="startButton3" class="level-button" data-level="3">
+                Level 3
+              </button>
+              <button id="leaderboardButton" class="leaderboard-Button">
+                Leaderboard
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <canvas id="canvas" width="730" height="600"></canvas>
